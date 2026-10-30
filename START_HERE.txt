@@ -1,0 +1,6 @@
+From this folder run:
+
+python -m http.server 8000 --directory dist
+
+Open http://localhost:8000
+Orders: http://localhost:8000/sales/order/history/v2/
