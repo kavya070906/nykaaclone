@@ -1,7 +1,7 @@
 (()=>{
 const $=(q,r=document)=>r.querySelector(q),$$=(q,r=document)=>[...r.querySelectorAll(q)];
-const stateKey='nykaaman-replica-profile-v1';
-let profile={name:'Vidit Jain',email:'viditj2212@gmail.com',phone:'9004743098',dob:'',gender:'',addresses:[]};
+const stateKey='nykaaman-replica-profile-v2';
+let profile={name:'Demo User',email:'demo@example.com',phone:'0000000000',dob:'',gender:'',addresses:[]};
 try{profile={...profile,...JSON.parse(localStorage.getItem(stateKey)||'{}')}}catch{}
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(t){const n=$('#toast');n.textContent=t;n.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>n.classList.remove('show'),2600)}
@@ -35,3 +35,14 @@ $$('button').filter(b=>b.textContent.trim()==='Grooming Advice').forEach(b=>b.on
 })();
 
 document.querySelectorAll('.order-details-button').forEach(button=>button.addEventListener('click',()=>{const panel=document.getElementById(button.getAttribute('aria-controls'));const expanded=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!expanded));panel.hidden=expanded;}));
+
+// Mark campaign rails by their original card width so mobile keeps useful card sizes.
+document.querySelectorAll('.disable-scrollbars').forEach(rail=>{
+ const card=rail.firstElementChild;if(!card)return;
+ const ratio=parseFloat(getComputedStyle(card).width)/Math.max(1,rail.clientWidth);
+ rail.classList.add('responsive-rail');
+ rail.classList.add(ratio<.18?'rail-small':ratio<.4?'rail-medium':'rail-large');
+});
+// Put search on its own row in the compact header without duplicating the input.
+const headerSearch=document.querySelector('#headerMenu input[placeholder="Search on Men"]');
+if(headerSearch){let group=headerSearch;while(group.parentElement&&group.parentElement.id!=='headerMenu')group=group.parentElement;group.classList.add('responsive-search');}
